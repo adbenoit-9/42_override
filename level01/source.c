@@ -1,30 +1,29 @@
-int verify_user_pass(byte *param_1)
+int verify_user_pass(char *str)
 {
   int iVar1;
-  byte *pbVar2;
-  undefined in_CF;
-  undefined in_ZF;
+  char *pass;
+  bool in_CF;
+  bool in_ZF;
   
   iVar1 = 5;
-  pbVar2 = (byte *)"admin";
-  do {
-    if (iVar1 == 0) break;
-    iVar1 = iVar1 + -1;
-    in_CF = *param_1 < *pbVar2;
-    in_ZF = *param_1 == *pbVar2;
-    param_1 = param_1 + 1;
-    pbVar2 = pbVar2 + 1;
-  } while ((bool)in_ZF);
-  return (int)(char)((!(bool)in_CF && !(bool)in_ZF) - in_CF);
+  pass = "admin";
+  while (in_ZF && iVar1 != 0) {
+    --iVar1;
+    in_CF = *str < *pass;
+    in_ZF = *str == *pass;
+    ++str;
+    ++pass;
+  }
+  return ((!in_CF && !in_ZF) - in_CF);
 }
 
 int verify_user_name(void)
 {
   int iVar1;
-  byte *pbVar2;
-  byte *pbVar3;
-  undefined uVar4;
-  undefined uVar5;
+  byte *str;
+  char *name;
+  bool uVar4;
+  bool uVar5;
   byte bVar6;
   
   bVar6 = 0;
@@ -32,54 +31,54 @@ int verify_user_name(void)
   uVar5 = (undefined *)register0x00000010 == (undefined *)0x1c;
   puts();
   iVar1 = 7;
-  pbVar2 = a_user_name;
-  pbVar3 = (byte *)"dat_wil";
-  do {
-    if (iVar1 == 0) break;
+  str = a_user_name;
+  name = "dat_wil";
+   while (uVar5 && iVar1 != 0) {
     iVar1 = iVar1 + -1;
-    uVar4 = *pbVar2 < *pbVar3;
-    uVar5 = *pbVar2 == *pbVar3;
-    pbVar2 = pbVar2 + (uint)bVar6 * -2 + 1;
-    pbVar3 = pbVar3 + (uint)bVar6 * -2 + 1;
-  } while ((bool)uVar5);
-  return (int)(char)((!(bool)uVar4 && !(bool)uVar5) - uVar4);
+    uVar4 = *str < *name;
+    uVar5 = *str == *name;
+    ++str;
+    ++name;
+  }
+  return ((!uVar4 && !uVar5) - uVar4);
 }
 
 int main(void)
 {
-  undefined4 uVar1;
+  int ret;
   int i;
-  undefined4 *puVar3;
-  undefined4 local_54[16];
-  int local_14;
+  char *tmp;
+  char pass_input[16];
+  int is_correct;
   
   i = 16;
-  puVar3 = local_54;
+  tmp = pass_input;
   while (i != 0) {
     --i;
-    *puVar3 = 0;
-    ++puVar3;
+    *tmp = 0;
+    ++tmp;
   }
-  local_14 = 0;
+  is_correct = 0;
   puts("********* ADMIN LOGIN PROMPT *********");
   printf("Enter Username: ");
-  fgets(a_user_name,0x100,stdin);
-  local_14 = verify_user_name();
-  if (local_14 == 0) {
+  fgets(a_user_name, 256, stdin);
+  is_correct = verify_user_name();
+  if (is_correct == 0) {
     puts("Enter Password: ");
-    fgets(local_54,100,stdin);
-    local_14 = verify_user_pass(local_54);
-    if ((local_14 == 0) || (local_14 != 0)) {
+    fgets(pass_input, 100, stdin);
+    is_correct = verify_user_pass(pass_input);
+    if ((is_correct == 0) || (is_correct != 0)) {
       puts("nope, incorrect password...\n");
-      uVar1 = 1;
+      ret = 1;
     }
     else {
-      uVar1 = 0;
+      ret = 0;
     }
   }
   else {
     puts("nope, incorrect username...\n");
-    uVar1 = 1;
+    ret = 1;
   }
-  return uVar1;
+  return ret;
 }
+  0x08048580
