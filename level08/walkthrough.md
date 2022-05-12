@@ -1,5 +1,5 @@
 # Level 08
-*password : *
+*password : 7WJ6jFBzrcjEYXudxnM3kdW7n3qyxR6tk2xGrkSC*
 
 ## Analyze
 

@@ -38,7 +38,7 @@ int store_number(char *buffer) {
         puts(" *** ERROR! ***");
         return 1;
     }
-    buffer[index] = number;
+    buffer[index * 4] = number;
     return 0;
 }
 
