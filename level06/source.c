@@ -1,44 +1,42 @@
-int auth(int param_1,uint param_2)
+int auth(char *login,unsigned int serial)
 {
-  int iVar1;
-  undefined4 uVar2;
-  int iVar3;
-  int local_18;
-  uint local_14;
+  int len;
+  int ret;
+  int i;
+  unsigned int res;
   
-  iVar1 = strcspn();
-  *(undefined *)(iVar1 + param_1) = 0;
-  iVar1 = strnlen();
-  if (iVar1 < 6) {
-    uVar2 = 1;
+  len = strcspn(login, "\n");
+  login[len] = 0;
+  len = strnlen(login, 100);
+  if (len < 6) {
+    ret = 1;
   }
   else {
-    iVar3 = ptrace();
-    if (iVar3 == -1) {
+    if (ptrace() == -1) {
       puts();
       puts();
       puts();
-      uVar2 = 1;
+      ret = 1;
     }
     else {
-      local_14 = ((int)*(char *)(param_1 + 3) ^ 0x1337U) + 0x5eeded;
-      local_18 = 0;
-      while (local_18 < iVar1) {
-        if (*(char *)(local_18 + param_1) < ' ') {
+      res = login[3] ^ 0x1337U + 0x5eeded;
+      i = 0;
+      while (i < len) {
+        if (login[i] < ' ') {
           return 1;
         }
-        local_14 = local_14 + ((int)*(char *)(local_18 + param_1) ^ local_14) % 0x539;
-        local_18 = local_18 + 1;
+        res = res + (login[i] ^ res) % 1337;
+        ++i;
       }
-      if (param_2 == local_14) {
-        uVar2 = 0;
+      if (serial == res) {
+        ret = 0;
       }
       else {
-        uVar2 = 1;
+        ret = 1;
       }
     }
   }
-  return uVar2;
+  return ret;
 }
 
 int main(void)
@@ -46,19 +44,21 @@ int main(void)
   int iVar1;
   int ret;
   int in_GS_OFFSET;
+  unsigned int serial;
+  char login[100];
   
   iVar1 = *(int *)(in_GS_OFFSET + 0x14);
-  puts("*****************************");
+  puts("***********************************");
   puts("*\t\tlevel06\t\t  *");
-  puts("*****************************");
+  puts("***********************************");
   printf("-> Enter Login: ");
-  fgets();
-  puts("*****************************");
-  puts();
-  puts("*****************************");
+  fgets(login, 100, 0);
+  puts("***********************************");
+  puts("***** NEW ACCOUNT DETECTED ********");
+  puts("***********************************");
   printf("-> Enter Serial: ");
-  __isoc99_scanf("%u", nb);
-  ret = auth();
+  __isoc99_scanf("%u", serial);
+  ret = auth(login, serial);
   if (ret == 0) {
     puts("Authenticated!");
     system("/bin/sh");

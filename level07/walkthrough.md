@@ -1,5 +1,5 @@
 # Level 07
-*password : *
+*password : GbcPDRgsFK77LNnnuh7QyFYA2942Gp8yKj9KrWD8*
 
 ## Analyze
 
