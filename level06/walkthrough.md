@@ -1,5 +1,5 @@
 # Level 06
-*password : *
+*password : h4GtNnaMs2kZFN92ymTr2DcJHAzMfzLW25Ep59mq*
 
 ## Analyze
 
