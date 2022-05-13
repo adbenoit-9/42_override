@@ -41,7 +41,7 @@ int main(int ac, char **av)
 		printf("ERROR: Failed to open %s\n","./backups/.log");
 		exit(1);
 	}
-	log_wrapper(log_fd,"Starting back up: ", av[1]);
+	log_wrapper(log_fd, "Starting back up: ", av[1]);
 	stream = fopen(av[1], "r");
 	if (!stream) {
 		printf("ERROR: Failed to open %s\n", av[1]);
