@@ -7,7 +7,6 @@
 scp -P 4242 level00@192.168.56.109:level00 binary/
 ```
 - pass[0] must be equal to 5276
-- &DAT_08048636 = "%d"
 
 so :
 ```

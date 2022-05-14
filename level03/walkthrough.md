@@ -7,6 +7,7 @@
 scp -P 4242 level03@192.168.56.109:level03 binary/
 ```
 
+- find param_1 value
 ```
 (gdb) b decrypt
 (gdb) run
@@ -36,15 +37,25 @@ $7 = 1
 $8 = 322424845
 ```
 
-param_1 = 322424845
+`param_1` : 322424845
 
+- find nb for nb^'Q' = 'C'
+
+```
+char str[] = "Q}|u`sfg~sf{}|a3";
+...
+str[i] = nb ^ str[i];
+...
+if (strcmp(str, "Congratulations!") == 0)
+    system("/bin/sh");
+```
 ```
 $ gcc find_nb.c 
 $ ./a.out
 nb = 18
 ```
 
-password = 322424845 - 18 = 322424827
+`password` : 322424845 - 18 = 322424827
 
 ```
 $ ./level03 

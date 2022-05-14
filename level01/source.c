@@ -81,4 +81,3 @@ int main(void)
   }
   return ret;
 }
-  0x08048580

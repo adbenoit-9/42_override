@@ -47,7 +47,7 @@ int read_number(char *buffer) {
 
     printf(" Index:");
     index = get_unum();
-    printf(" Number at data[%u] is %u\n", index, buffer[index]);
+    printf(" Number at data[%u] is %u\n", index * 4, buffer[index * 4]);
     return 0;
 }
 
