@@ -35,6 +35,39 @@ Breakpoint 1, 0x08048469 in verify_user_name ()
 0x804a040 <a_user_name>:        0x5f746164
 ```
 - address of `a_user_name + 7` : 0x0804a040 + 7 = 0x0804a047
+
+---
+### Compute offset
+
+```
+b *main+176
+Breakpoint 1 at 0x8048580
+(gdb) run
+Starting program: /home/users/level01/level01 
+********* ADMIN LOGIN PROMPT *********
+Enter Username: dat_wil
+verifying username....
+
+Enter Password: 
+AAAAAAAAAAAAAAA
+
+Breakpoint 1, 0x08048580 in main ()
+(gdb) i f
+Stack level 0, frame at 0xffffd710:
+ eip = 0x8048580 in main; saved eip 0xf7e45513
+ Arglist at 0xffffd708, args: 
+ Locals at 0xffffd708, Previous frame's sp is 0xffffd710
+ Saved registers:
+  ebx at 0xffffd700, ebp at 0xffffd708, edi at 0xffffd704, eip at 0xffffd70c
+(gdb) x/x $eax
+0xffffd6bc:     0x41414141
+```
+- eip at 0xffffd70c
+- buffer at 0xffffd6bc
+
+`0xffffd70c - 0xffffd6bc = 50` (80 in decimal)
+
+---
 - eip offset found : 80
 
 ```

