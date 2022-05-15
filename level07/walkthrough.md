@@ -54,9 +54,9 @@ Stack level 0, frame at 0xffffd710:
 
 `0xffffd70c - 0xffffd544 = 1c8` (456 in decimal)
 
-eip offset found : 456
-
 ---
+
+- eip offset found : 456
 
 ```
 buffer[index * 4] = number;

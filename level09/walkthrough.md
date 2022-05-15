@@ -24,7 +24,33 @@ Non-debugging symbols:
 0x000055555555488c  secret_backdoor
 ```
 `secret_backdoor()` address : 0x000055555555488c\
-- offset : 200 
+
+---
+### Compute offset
+
+```
+(gdb) b *handle_msg+95
+Breakpoint 1 at 0x91f
+(gdb) run
+(gdb) i f
+Stack level 0, frame at 0x7fffffffe5d0:
+ rip = 0x55555555491f in handle_msg; saved rip 0x555555554abd
+ called by frame at 0x7fffffffe5e0
+ Arglist at 0x7fffffffe5c0, args: 
+ Locals at 0x7fffffffe5c0, Previous frame's sp is 0x7fffffffe5d0
+ Saved registers:
+  rbp at 0x7fffffffe5c0, rip at 0x7fffffffe5c8
+(gdb) x/x $rdi
+0x7fffffffe500: 0x0000000a
+```
+- rip at 0x7fffffffe5c8
+- buffer at 0x7fffffffe500
+
+`0x7fffffffe5c8 - 0x7fffffffe500 = c8` (200 in decimal)
+
+---
+
+- rip offset found : 200 
 - `buffer[180]` : 200 + 8 = 208 (d0 in hexadecimal)
 
 ```
