@@ -21,7 +21,7 @@ void	set_msg(char *buffer)
 	puts(">: Msg @Unix-Dude");
 	printf(">>: ");
 	fgets(msg, 1024, stdin);
-	strncpy(buffer, msg, buffer[180]);
+	strncpy(buffer, msg, buffer + 180);
 	return;
 }
 
